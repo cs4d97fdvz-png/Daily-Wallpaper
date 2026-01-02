@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Fact Wallpaper</title>
+    <style>
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background-color: #000; font-family: 'Helvetica Neue', Arial, sans-serif;
+            overflow: hidden;
+        }
+        .canvas-container {
+            width: 1290px; height: 2796px; /* iPhone 15 Pro Res */
+            position: relative;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; color: white; padding: 100px;
+        }
+        .fact-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 60px; border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 { font-size: 80px; margin-bottom: 40px; opacity: 0.8; }
+        p { font-size: 60px; line-height: 1.4; font-weight: 300; }
+        .date { position: absolute; top: 150px; font-size: 40px; letter-spacing: 5px; opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <div class="canvas-container" id="wallpaper">
+        <div class="date" id="dateText"></div>
+        <div class="fact-box">
+            <h1>DID YOU KNOW?</h1>
+            <p id="factText">Loading today's world fact...</p>
+        </div>
+    </div>
+
+    <script>
+        const facts = [
+            "Glaciers and ice sheets hold about 69 percent of the world's freshwater.",
+            "The entire world's population could fit inside Los Angeles, standing shoulder-to-shoulder.",
+            "The world's quietest room is located at Microsoft's headquarters in Washington state.",
+            "There are more islands in Sweden than in any other country (over 221,800).",
+            "The longest place name in the world is 85 letters long (in New Zealand)."
+        ];
+
+        // Seeded random based on date
+        const today = new Date();
+        const dateString = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        const seed = today.getFullYear() + today.getMonth() + today.getDate();
+        
+        document.getElementById('dateText').innerText = dateString.toUpperCase();
+        document.getElementById('factText').innerText = facts[seed % facts.length];
+
+        // Change background color based on the day
+        const colors = ['#1a1a2e', '#2c3e50', '#4b79a1', '#283c86', '#000000'];
+        document.getElementById('wallpaper').style.background = `linear-gradient(135deg, ${colors[seed % colors.length]} 0%, #000 100%)`;
+    </script>
+</body>
+</html>
